@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""this is doc"""
+
+
 import csv
 import math
 from typing import List
@@ -9,6 +13,7 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
+        """init"""
         self.__dataset = None
 
     def dataset(self) -> List[List]:
@@ -23,16 +28,14 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """gets page """
         assert isinstance(page, int) and isinstance(page_size, int)
         assert (page > 0) and (page_size > 0)
-        # assert 
         self.dataset()
-        start,end = self.index_range(page,page_size)
-        return self.__dataset[start:end]
+        start, end = self.index_range(page, page_size)
+        return self.__dataset[start: end]
 
-
-            
-    def index_range(self,page, page_size):
+    def index_range(self.page, page_size):
         """returns a tuple"""
         return ((page-1) * page_size, page * page_size)
 
