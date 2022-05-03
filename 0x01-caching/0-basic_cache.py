@@ -3,6 +3,7 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 
 class BasicCache(BaseCaching):
+    """is a class"""
     def __init__(self) -> None:
         """initialises"""
         super().__init__()
