@@ -1,34 +1,45 @@
-"""has 1 class inheriting from another file """
-from collections import deque
-
-
-BaseCaching = __import__('base_caching').BaseCaching
+#!/usr/bin/python3
+""" Python caching systems """
+from base_caching import BaseCaching
+from collections import OrderedDict
 
 
 class LRUCache(BaseCaching):
-    """class"""
-
-    def __init__(self) -> None:
-        """inits """
+    """ LRU caching system
+    Use of OrderedDict which keep order of insertion of keys
+    The order shows how recently they were used.
+    In the beginning is the least recently used and in the end,
+    the most recently used.
+    Any update OR query made to a key moves to the end (most recently used).
+    If anything is added, it is added at the end (most recently used/added).
+    All operations have O(1) time complexity.
+    """
+    def __init__(self):
+        """ Initialize class instance. """
         super().__init__()
-        self.q = deque([])
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
-        """assigns an item"""
+        """ Add an item in the cache
+        First, add/ update the key by conventional methods.
+        And also move the key to the end to show that it was recently used.
+        But here we will also check if the length of our dictionary
+        has exceeded our capacity.
+        If so remove the first key (least recently used)
+        """
         if key and item:
-            if len(self.q) >= BaseCaching.MAX_ITEMS:
-                d = self.q.popleft()
-                del self.cache_data[d]
-                print("DISCARD: {:s}".format(d))
-            if key in self.q:
-                self.q.remove(key)
-            self.q.append(key)
             self.cache_data[key] = item
+            self.cache_data.move_to_end(key)
+            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+                discarded = self.cache_data.popitem(last=False)
+                print('DISCARD: {}'.format(discarded[0]))
 
     def get(self, key):
-        """returns an item"""
-        if key and key in self.cache_data.keys():
-            self.q.remove(key)
-            self.q.append(key)
+        """ Get an item by key
+        Return the value of the key that is queried in O(1)
+        and return -1 if the key is not found.
+        And also move the key to the end to show that it was recently used
+        """
+        if key in self.cache_data:
+            self.cache_data.move_to_end(key)
             return self.cache_data[key]
-        return None
