@@ -14,6 +14,8 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
+        """inits the class
+        """
         self.__dataset = None
         self.__indexed_dataset = None
 
@@ -40,4 +42,6 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
+        """passes
+        """
         pass
