@@ -13,3 +13,7 @@ babel = Babel(app)
 def get_locale():
     """gets a locale"""
     return request.accept_languages.best_match(['en', 'es'])
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="5000")
